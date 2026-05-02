@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListContacts from "./Components/ListContacts";
 import AddContacts from "./Components/AddContacts";
+import Loader from "./Components/Loader";
 
 type Contact = {
   nombre: string;
@@ -13,6 +14,17 @@ function App() {
     { nombre: "Ana", telefono: "2222222222" },
   ]);
 
+  const [loading, setLoading] = useState(true);
+
+  // Loader
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   //AddContact
   const addContact = (newContact: Contact) => {
     setContacts([...contacts, newContact]);
@@ -24,6 +36,10 @@ function App() {
     setContacts(updatedContacts);
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <AddContacts onAdd={addContact} />
@@ -33,4 +49,3 @@ function App() {
 }
 
 export default App;
-
