@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Environment — never commit credentials
+.env
+.env.*
+
+# Graphify temp files
+.graphify_python
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
