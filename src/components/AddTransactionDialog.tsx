@@ -6,15 +6,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { supabase } from "@/integrations/client";
+import { Switch } from "@/components/ui/switch";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "@/integrations/firebase";
 import { toast } from "sonner";
-import { Banknote, CreditCard, PiggyBank } from "lucide-react";
+import { Banknote, CreditCard, PiggyBank, MapPin } from "lucide-react";
 
 const schema = z.object({
   amount: z.number().positive("Monto debe ser mayor a 0").max(1_000_000_000),
-  payment_method: z.enum(["cash", "credit", "savings"]),
+  paymentMethod: z.enum(["cash", "credit", "savings"]),
   description: z.string().trim().max(200).optional(),
-  transaction_date: z.string().min(1),
+  transactionDate: z.string().min(1),
 });
 
 type Method = "cash" | "credit" | "savings";
@@ -41,12 +43,48 @@ export const AddTransactionDialog = ({
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [busy, setBusy] = useState(false);
+  const [locationEnabled, setLocationEnabled] = useState(false);
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locLoading, setLocLoading] = useState(false);
 
   const reset = () => {
     setAmount("");
     setMethod("cash");
     setDescription("");
     setDate(new Date().toISOString().slice(0, 10));
+    setLocationEnabled(false);
+    setLocation(null);
+  };
+
+  const handleToggleLocation = (enabled: boolean) => {
+    setLocationEnabled(enabled);
+    if (!enabled) {
+      setLocation(null);
+      return;
+    }
+    if (!navigator.geolocation) {
+      toast.error("Tu navegador no soporta geolocalización");
+      setLocationEnabled(false);
+      return;
+    }
+    setLocLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocLoading(false);
+      },
+      (err) => {
+        const msg =
+          err.code === err.PERMISSION_DENIED
+            ? "Permiso de ubicación denegado por el navegador"
+            : "No se pudo obtener la ubicación";
+        toast.error(msg);
+        setLocationEnabled(false);
+        setLocation(null);
+        setLocLoading(false);
+      },
+      { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+    );
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -55,27 +93,25 @@ export const AddTransactionDialog = ({
     try {
       const parsed = schema.parse({
         amount: parseFloat(amount),
-        payment_method: method,
+        paymentMethod: method,
         description: description || undefined,
-        transaction_date: date,
+        transactionDate: date,
       });
-      const { error } = await supabase.from("transactions").insert({
-        user_id: userId,
+      await addDoc(collection(db, "users", userId, "transactions"), {
         amount: parsed.amount,
-        payment_method: parsed.payment_method,
+        paymentMethod: parsed.paymentMethod,
         description: parsed.description ?? null,
-        transaction_date: parsed.transaction_date,
+        transactionDate: parsed.transactionDate,
+        location: locationEnabled && location ? location : null,
+        createdAt: serverTimestamp(),
       });
-      if (error) throw error;
       toast.success("Transacción añadida");
       reset();
       onOpenChange(false);
       onCreated();
     } catch (err) {
       const msg =
-        err instanceof z.ZodError
-          ? err.errors[0].message
-          : (err as Error).message;
+        err instanceof z.ZodError ? err.errors[0].message : (err as Error).message;
       toast.error(msg);
     } finally {
       setBusy(false);
@@ -83,12 +119,10 @@ export const AddTransactionDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={(v) => { onOpenChange(v); if (!v) reset(); }}>
       <DialogContent className="sm:max-w-md rounded-3xl">
         <DialogHeader>
-          <DialogTitle className="text-xl tracking-tight">
-            Nueva transacción
-          </DialogTitle>
+          <DialogTitle className="text-xl tracking-tight">Nueva transacción</DialogTitle>
         </DialogHeader>
         <form onSubmit={submit} className="space-y-5 mt-2">
           <div>
@@ -164,6 +198,29 @@ export const AddTransactionDialog = ({
               className="w-full h-12 rounded-2xl border border-border bg-surface px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
               required
             />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between h-12 rounded-2xl border border-border bg-surface px-4">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="size-4" />
+                <span>Guardar ubicación actual</span>
+              </div>
+              <Switch
+                checked={locationEnabled}
+                onCheckedChange={handleToggleLocation}
+                disabled={locLoading}
+              />
+            </div>
+            {locationEnabled && (
+              <p className="text-xs text-muted-foreground mt-1.5 ml-1">
+                {locLoading
+                  ? "Obteniendo ubicación..."
+                  : location
+                  ? `Ubicación capturada (${location.lat.toFixed(5)}, ${location.lng.toFixed(5)})`
+                  : "No se pudo obtener la ubicación"}
+              </p>
+            )}
           </div>
 
           <button
