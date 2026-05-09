@@ -1,0 +1,298 @@
+{
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\eslint.config.js": {
+    "mtime": 1777751392.760924,
+    "hash": "bc484741cdf3591af5da7d9f3da3a647"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\postcss.config.js": {
+    "mtime": 1777751392.7689295,
+    "hash": "33fad9c02cb0ec6d6030369ef6347d57"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\tailwind.config.ts": {
+    "mtime": 1777751392.8666975,
+    "hash": "c00533c67b4be7258feca5b6adbf73c9"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\vite.config.ts": {
+    "mtime": 1778345284.7842598,
+    "hash": "14e8c55edb9db58de9db07eed184e1c3"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\vitest.config.ts": {
+    "mtime": 1777751392.8716989,
+    "hash": "8800905cca6b71b675e406a15d2d5b13"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\App.tsx": {
+    "mtime": 1777751392.770929,
+    "hash": "bc93c2cbab00de8210766ce1cbcb60c9"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\main.tsx": {
+    "mtime": 1777751392.8576984,
+    "hash": "3ad492668e71c9fb3069381cb93760ed"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\vite-env.d.ts": {
+    "mtime": 1777751392.8626988,
+    "hash": "8f68c27c3fc38817b2726b20e2d4f1ee"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\AddTransactionDialog.tsx": {
+    "mtime": 1778347271.4588366,
+    "hash": "c0ebdc02b73bbc15f4d523807a987aa4"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\Dashboard.tsx": {
+    "mtime": 1778346847.0922031,
+    "hash": "3e08330f574b1e35cb816f8fa7b228bf"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\NavLink.tsx": {
+    "mtime": 1777751392.7749255,
+    "hash": "6c814366df3ef638678d6a77919e8e73"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\accordion.tsx": {
+    "mtime": 1777751392.7759273,
+    "hash": "e72cfb75bbcbb228334a194ce37af0bb"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\alert-dialog.tsx": {
+    "mtime": 1777751392.7769284,
+    "hash": "c4947ce346f37b4faaddae231aed69ef"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\alert.tsx": {
+    "mtime": 1777751392.7779286,
+    "hash": "b4be5707f5ab6669d924bc2f8cc9036d"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\aspect-ratio.tsx": {
+    "mtime": 1777751392.7789266,
+    "hash": "14c12661aad8c80328c86a18b506c088"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\avatar.tsx": {
+    "mtime": 1777751392.779929,
+    "hash": "a171cfeb505517043ddd9218d6a5e856"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\badge.tsx": {
+    "mtime": 1777751392.7809298,
+    "hash": "a37c6f81d27124cfd0225f7035b357f9"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\breadcrumb.tsx": {
+    "mtime": 1777751392.7829232,
+    "hash": "c762673cd0f5b46dedcddd0b1421f263"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\button.tsx": {
+    "mtime": 1777751392.7839286,
+    "hash": "94bd36cafd64e87f9689795b005dedba"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\calendar.tsx": {
+    "mtime": 1777751392.7849293,
+    "hash": "343db671cdc2390a358039be1341b99b"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\card.tsx": {
+    "mtime": 1777751392.7859287,
+    "hash": "ac3d54b48e07cf78af13abd274545046"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\carousel.tsx": {
+    "mtime": 1777751392.7863052,
+    "hash": "d2928aedebc030be83dbf74abcfb61c1"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\chart.tsx": {
+    "mtime": 1777751392.7873135,
+    "hash": "64f48547b2ed5730ea047d9f9d210256"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\checkbox.tsx": {
+    "mtime": 1777751392.788313,
+    "hash": "161a910950a312c3963fc6350ee1d344"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\collapsible.tsx": {
+    "mtime": 1777751392.7893138,
+    "hash": "72fafa9d8b58f83ec9b7c8f141bfdd42"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\command.tsx": {
+    "mtime": 1777751392.7903137,
+    "hash": "c7e003cfba45d1bbba98df9561259232"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\context-menu.tsx": {
+    "mtime": 1777751392.791314,
+    "hash": "a36b1044256b66684096483c2dbede63"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\dialog.tsx": {
+    "mtime": 1777751392.7923143,
+    "hash": "699007ab6dad6cc879b43af89b9592aa"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\drawer.tsx": {
+    "mtime": 1777751392.7933135,
+    "hash": "41ede59de861b9f05cba9f5d0097f800"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\dropdown-menu.tsx": {
+    "mtime": 1777751392.7943141,
+    "hash": "6dd5fa5fa8225eb4d703d55dc1832b24"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\form.tsx": {
+    "mtime": 1777751392.7953122,
+    "hash": "78a24e3cd835f1ee764d56ebb5ab7d53"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\hover-card.tsx": {
+    "mtime": 1777751392.7963138,
+    "hash": "b46c749d484dc555c25a2502be38632a"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\input-otp.tsx": {
+    "mtime": 1777751392.7973137,
+    "hash": "e0390f19f21f96fc141cd919f06223d3"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\input.tsx": {
+    "mtime": 1777751392.7983122,
+    "hash": "db3a19a90b361a4c099bb171f7ddd037"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\label.tsx": {
+    "mtime": 1777751392.7993135,
+    "hash": "9074a9f4cb6a860c1cb225485473b39c"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\menubar.tsx": {
+    "mtime": 1777751392.8003135,
+    "hash": "ac4a3511907e94920819e6d1e6606087"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\navigation-menu.tsx": {
+    "mtime": 1777751392.8013134,
+    "hash": "4f7d54a5c586ccc87132149741fee5de"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\pagination.tsx": {
+    "mtime": 1777751392.8023138,
+    "hash": "69a5d1f5321fc97e07575ec7a0371969"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\popover.tsx": {
+    "mtime": 1777751392.8033135,
+    "hash": "ea3daebc467de9b80c429089c3f53cd0"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\progress.tsx": {
+    "mtime": 1777751392.8043141,
+    "hash": "ff0b407ed3683b6f7feb17562aa349c8"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\radio-group.tsx": {
+    "mtime": 1777751392.8053136,
+    "hash": "b07472fdebbbbe9d062c80639c097d87"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\resizable.tsx": {
+    "mtime": 1777751392.806315,
+    "hash": "36de5cdb0df1f07cd3950afad0ab9e95"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\scroll-area.tsx": {
+    "mtime": 1777751392.8073146,
+    "hash": "bec476f9572e0db870d6ceaffe43dd0f"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\select.tsx": {
+    "mtime": 1777751392.808315,
+    "hash": "5993420bbb449813cc340ebb7d7db9c4"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\separator.tsx": {
+    "mtime": 1777751392.8093143,
+    "hash": "b4e4808e0a6f81ef566330c1c08109d6"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\sheet.tsx": {
+    "mtime": 1777751392.8103127,
+    "hash": "3917a46855879fd098b5095bbfa7a4ae"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\sidebar.tsx": {
+    "mtime": 1777751392.8337977,
+    "hash": "bf6f7fe6700a6700bb0fc4cbc5d55f73"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\skeleton.tsx": {
+    "mtime": 1777751392.8348014,
+    "hash": "09f9e8dccff4009b5583663ff3a9fd88"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\slider.tsx": {
+    "mtime": 1777751392.8357952,
+    "hash": "77ff63733999e2e9acf099a291d24523"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\sonner.tsx": {
+    "mtime": 1777751392.8367991,
+    "hash": "f375774f847d020348cd21d524d28c75"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\switch.tsx": {
+    "mtime": 1777751392.8377979,
+    "hash": "6c973a803c964ae9786844f209a8393e"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\table.tsx": {
+    "mtime": 1777751392.838798,
+    "hash": "dc55bedba6059418a63177f2f7547730"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\tabs.tsx": {
+    "mtime": 1777751392.8397975,
+    "hash": "b7df2ff988a0cfe695af2ef55a22a8ec"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\textarea.tsx": {
+    "mtime": 1777751392.8407986,
+    "hash": "54c305214a606614741d7072947b7c92"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\toast.tsx": {
+    "mtime": 1777751392.8417976,
+    "hash": "3dc44687d711a2f09be49666d2c14fda"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\toaster.tsx": {
+    "mtime": 1777751392.8427985,
+    "hash": "0f5d0fdbcc2d4611e59994af4393e27e"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\toggle-group.tsx": {
+    "mtime": 1777751392.8437984,
+    "hash": "f5393a889d63abf248fb6c92f7e10ebd"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\toggle.tsx": {
+    "mtime": 1777751392.8447995,
+    "hash": "3d0d47779c3c7fc499879463bb16c758"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\tooltip.tsx": {
+    "mtime": 1777751392.845794,
+    "hash": "9837b94764884c7362382d9d1f6de868"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ui\\use-toast.ts": {
+    "mtime": 1777751392.8467991,
+    "hash": "5bff9ea3904b15a9e1908b128c88e75f"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\hooks\\use-mobile.tsx": {
+    "mtime": 1777751392.8487964,
+    "hash": "1bb3ebac7752b497a78d34e341975bbd"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\hooks\\use-toast.ts": {
+    "mtime": 1777751392.8497932,
+    "hash": "895be3e18021c7c5cd4fac68ea522dd4"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\hooks\\useAuth.tsx": {
+    "mtime": 1778345170.8110006,
+    "hash": "c33c8448b5d29f1c2857d6c1d8ca6efe"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\integrations\\client.ts": {
+    "mtime": 1778345270.188088,
+    "hash": "12b6a4d539090461c9ee02191bc002b4"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\integrations\\firebase.ts": {
+    "mtime": 1778345156.9358559,
+    "hash": "bc75107693585ff2d3e8eb0f5c4104d8"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\integrations\\lovable.ts": {
+    "mtime": 1778345276.4022522,
+    "hash": "1365d39bce5309b1a5630b33392528d4"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\integrations\\types.ts": {
+    "mtime": 1778345278.1407495,
+    "hash": "7ee94563b0919c524b6a24bc7172fdf5"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\libs\\utils.ts": {
+    "mtime": 1777751392.8566904,
+    "hash": "e3f848f1b39f863e6164cf58b5a8e752"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\pages\\Auth.tsx": {
+    "mtime": 1778345249.8941526,
+    "hash": "732c1b00c255a97b8ae1c20ab138fc21"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\pages\\Index.tsx": {
+    "mtime": 1777751392.8607008,
+    "hash": "7c3b0657e05c93004e7a4c10ef1d3322"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\pages\\NotFound.tsx": {
+    "mtime": 1777751392.8616989,
+    "hash": "56c0e8759328865e67fc2c480b916804"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\supabase\\migrations\\20260501155158_475c9acf-5633-45d2-9950-4a172f8aac13.sql": {
+    "mtime": 1777751392.8656988,
+    "hash": "50eedf20b8c90077749da0156a5c460c"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\CLAUDE.md": {
+    "mtime": 1778343791.0126157,
+    "hash": "747e73a5e1af4b72c0d65c9169c23199"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\index.html": {
+    "mtime": 1777751392.7619228,
+    "hash": "f832e6e58457b96f36bdbc6c73d89a83"
+  }
+}
