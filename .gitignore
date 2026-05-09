@@ -16,8 +16,9 @@ dist-ssr
 .env
 .env.*
 
-# Graphify temp files
+# Graphify temp files and cache
 .graphify_python
+graphify-out/cache/
 
 # Editor directories and files
 .vscode/*
