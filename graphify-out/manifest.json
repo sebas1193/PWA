@@ -32,12 +32,20 @@
     "hash": "8f68c27c3fc38817b2726b20e2d4f1ee"
   },
   "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\AddTransactionDialog.tsx": {
-    "mtime": 1778347271.4588366,
-    "hash": "c0ebdc02b73bbc15f4d523807a987aa4"
+    "mtime": 1778357284.7474437,
+    "hash": "fdd18d4cff53b107192195642f19b6b0"
   },
   "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\Dashboard.tsx": {
-    "mtime": 1778346847.0922031,
-    "hash": "3e08330f574b1e35cb816f8fa7b228bf"
+    "mtime": 1778357327.5052347,
+    "hash": "c53b57f47b1167e28d7735defca73580"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ManageBanksDialog.tsx": {
+    "mtime": 1778357228.5727692,
+    "hash": "320fa4e4454627798b219fa74628a550"
+  },
+  "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\ManageCategoriesDialog.tsx": {
+    "mtime": 1778357248.2064912,
+    "hash": "a79a3b0ba1106b91c1590a95b7f78870"
   },
   "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\components\\NavLink.tsx": {
     "mtime": 1777751392.7749255,
@@ -264,8 +272,8 @@
     "hash": "1365d39bce5309b1a5630b33392528d4"
   },
   "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\integrations\\types.ts": {
-    "mtime": 1778345278.1407495,
-    "hash": "7ee94563b0919c524b6a24bc7172fdf5"
+    "mtime": 1778357205.2671244,
+    "hash": "af18dc96cd2ccea1c5fbfc813103e13a"
   },
   "D:\\User\\Documents\\UAO\\dev\\ProgresiveWebApp-PWA\\src\\libs\\utils.ts": {
     "mtime": 1777751392.8566904,
