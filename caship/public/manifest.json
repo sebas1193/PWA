@@ -1,6 +1,7 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "short_name": "Caship",
+  "name": "Caship — Finanzas Personales",
+  "description": "Controla tus finanzas personales: cuentas, categorías, transacciones con OCR y GPS, funciona offline.",
   "icons": [
     {
       "src": "assets/icon/favicon.png",
@@ -14,8 +15,12 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "orientation": "portrait",
+  "theme_color": "#6366f1",
+  "background_color": "#f5f7fb",
+  "lang": "es",
+  "categories": ["finance", "productivity"]
 }
