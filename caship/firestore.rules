@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function estaAutenticado() {
+      return request.auth != null;
+    }
+
+    function esElMismoUsuario(id_usuario) {
+      return request.auth.uid == id_usuario;
+    }
+
+    // Usuarios: solo el propio usuario puede leer/editar
+    match /usuarios/{userId} {
+      allow read, update: if estaAutenticado() && esElMismoUsuario(userId);
+      allow create:       if estaAutenticado();
+      // Subcollección de categorías propias del usuario
+      match /categorias/{catId} {
+        allow read, write: if estaAutenticado() && esElMismoUsuario(userId);
+      }
+    }
+
+    // Monedas: cualquier usuario autenticado puede leer
+    // Solo permite crear (seed inicial) — no editar ni borrar
+    match /monedas/{monedaId} {
+      allow read:   if estaAutenticado();
+      allow create: if estaAutenticado();
+    }
+
+    // Categorías globales: cualquier usuario autenticado puede leer
+    // Solo permite crear (seed inicial) — no editar ni borrar
+    match /categorias/{categoriaId} {
+      allow read:   if estaAutenticado();
+      allow create: if estaAutenticado();
+    }
+
+    // Cuentas: solo el dueño
+    match /cuentas/{cuentaId} {
+      allow create:        if estaAutenticado()
+                           && esElMismoUsuario(request.resource.data.id_usuario);
+      allow read, update, delete: if estaAutenticado()
+                           && esElMismoUsuario(resource.data.id_usuario);
+    }
+
+    // Transacciones
+    match /transacciones/{transaccionId} {
+      allow read, write: if estaAutenticado();
+    }
+  }
+}
