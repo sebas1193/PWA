@@ -1,14 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Plus,
-  MapPin,
-  LogOut,
-  Banknote,
-  CreditCard,
-  PiggyBank,
-} from "lucide-react";
-import { supabase } from "@/integrations/client";
+import { Plus, MapPin, LogOut, Banknote, CreditCard, PiggyBank } from "lucide-react";
+import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "@/integrations/firebase";
 import { useAuth } from "@/hooks/useAuth";
 import { AddTransactionDialog } from "@/components/AddTransactionDialog";
 
@@ -17,9 +11,10 @@ type Method = "cash" | "credit" | "savings";
 type Transaction = {
   id: string;
   amount: number;
-  payment_method: Method;
+  paymentMethod: Method;
   description: string | null;
-  transaction_date: string;
+  transactionDate: string;
+  location?: { lat: number; lng: number } | null;
 };
 
 const methodMeta: Record<Method, { label: string; icon: typeof Banknote }> = {
@@ -35,11 +30,11 @@ const getWeekBuckets = (txs: Transaction[]) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const monday = new Date(today);
-  const dayIdx = (today.getDay() + 6) % 7; // Mon=0
+  const dayIdx = (today.getDay() + 6) % 7;
   monday.setDate(today.getDate() - dayIdx);
 
   txs.forEach((t) => {
-    const d = new Date(t.transaction_date + "T00:00:00");
+    const d = new Date(t.transactionDate + "T00:00:00");
     const diff = Math.floor((d.getTime() - monday.getTime()) / 86400000);
     if (diff >= 0 && diff < 7) buckets[diff] += Number(t.amount);
   });
@@ -57,21 +52,23 @@ const Dashboard = () => {
 
   const load = async () => {
     if (!user) return;
-    const [{ data: profile }, { data: txs }] = await Promise.all([
-      supabase
-        .from("profiles")
-        .select("full_name")
-        .eq("id", user.id)
-        .maybeSingle(),
-      supabase
-        .from("transactions")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("transaction_date", { ascending: false }),
-    ]);
-    setProfileName(profile?.full_name || user.email?.split("@")[0] || "Tú");
-    setTransactions((txs as Transaction[]) ?? []);
-    setLoading(false);
+    try {
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+      setProfileName(
+        userSnap.data()?.displayName || user.displayName || user.email?.split("@")[0] || "Tú"
+      );
+      const q = query(
+        collection(db, "users", user.uid, "transactions"),
+        orderBy("transactionDate", "desc")
+      );
+      const snap = await getDocs(q);
+      setTransactions(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Transaction)));
+    } catch {
+      setProfileName(user.displayName || user.email?.split("@")[0] || "Tú");
+      setTransactions([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -79,7 +76,7 @@ const Dashboard = () => {
   }, [user]);
 
   const filtered = useMemo(
-    () => transactions.filter((t) => t.payment_method === filter),
+    () => transactions.filter((t) => t.paymentMethod === filter),
     [transactions, filter]
   );
   const weekBuckets = useMemo(() => getWeekBuckets(filtered), [filtered]);
@@ -93,15 +90,15 @@ const Dashboard = () => {
       const key = (t.description || "").trim().toLowerCase();
       if (!key) return;
       const cur = counts.get(key) || { count: 0, total: 0 };
-      counts.set(key, {
-        count: cur.count + 1,
-        total: cur.total + Number(t.amount),
-      });
+      counts.set(key, { count: cur.count + 1, total: cur.total + Number(t.amount) });
     });
-    let best: { name: string; count: number; total: number } | null = null;
+    let best: { name: string; count: number; total: number; hasLocation: boolean } | null = null;
     counts.forEach((v, k) => {
+      const hasLoc = filtered.some(
+        (t) => (t.description || "").trim().toLowerCase() === k && t.location != null
+      );
       if (!best || v.count > best.count)
-        best = { name: k, count: v.count, total: v.total };
+        best = { name: k, count: v.count, total: v.total, hasLocation: hasLoc };
     });
     return best;
   }, [filtered]);
@@ -122,15 +119,12 @@ const Dashboard = () => {
   return (
     <div className="min-h-dvh px-6 md:px-10 py-10 md:py-14">
       <div className="max-w-2xl mx-auto">
-        {/* Header */}
         <header className="flex items-center justify-between mb-10">
           <div>
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-1">
               Resumen
             </p>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              {profileName}
-            </h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{profileName}</h1>
           </div>
           <button
             onClick={handleSignOut}
@@ -141,7 +135,6 @@ const Dashboard = () => {
           </button>
         </header>
 
-        {/* Add transaction button (top, prominent) */}
         <button
           onClick={() => setOpen(true)}
           className="w-full mb-8 h-20 rounded-3xl bg-primary text-primary-foreground shadow-float flex items-center justify-center gap-3 hover:opacity-95 active:scale-[0.99] transition group"
@@ -152,7 +145,6 @@ const Dashboard = () => {
           <span className="font-medium tracking-tight">Añadir transacción</span>
         </button>
 
-        {/* Filter pills */}
         <div className="flex gap-2.5 mb-6 overflow-x-auto pb-1">
           {(Object.keys(methodMeta) as Method[]).map((m) => {
             const Icon = methodMeta[m].icon;
@@ -174,37 +166,23 @@ const Dashboard = () => {
           })}
         </div>
 
-        {/* Bar chart */}
         <section className="bg-surface rounded-3xl p-7 shadow-card border border-border/40 mb-6">
           <div className="flex items-baseline justify-between mb-7">
-            <h3 className="text-sm font-medium text-muted-foreground">
-              Esta semana
-            </h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Esta semana</h3>
             <span className="text-2xl font-semibold tabular-nums text-primary">
-              $
-              {totalWeek.toLocaleString("es", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
+              ${totalWeek.toLocaleString("es", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
-
           <div className="flex items-end justify-between gap-3 h-44 px-1">
             {weekBuckets.map((value, i) => {
-              const heightPct =
-                value === 0 ? 4 : Math.max(8, (value / maxBucket) * 100);
+              const heightPct = value === 0 ? 4 : Math.max(8, (value / maxBucket) * 100);
               const isToday = i === todayIdx;
               return (
-                <div
-                  key={i}
-                  className="flex-1 flex flex-col items-center gap-3 group"
-                >
+                <div key={i} className="flex-1 flex flex-col items-center gap-3 group">
                   <div className="w-full flex-1 flex items-end">
                     <div
                       className={`w-full rounded-lg transition-all duration-500 ${
-                        isToday
-                          ? "bg-primary"
-                          : "bg-secondary group-hover:bg-primary/20"
+                        isToday ? "bg-primary" : "bg-secondary group-hover:bg-primary/20"
                       }`}
                       style={{ height: `${heightPct}%` }}
                       title={`$${value.toFixed(2)}`}
@@ -223,7 +201,6 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Most frequent place */}
         <section className="bg-surface rounded-3xl p-6 shadow-card border border-border/40 flex items-center justify-between gap-4">
           <div className="flex items-center gap-5 min-w-0">
             <div className="size-14 rounded-2xl bg-primary-soft flex items-center justify-center shrink-0 relative overflow-hidden">
@@ -235,21 +212,18 @@ const Dashboard = () => {
               </p>
               {topPlace ? (
                 <>
-                  <h4 className="text-base font-semibold capitalize truncate">
+                  <h4 className="text-base font-semibold capitalize truncate flex items-center gap-1.5">
                     {topPlace.name}
+                    {topPlace.hasLocation && (
+                      <MapPin className="size-3 text-primary shrink-0" strokeWidth={2} />
+                    )}
                   </h4>
-                  <p className="text-xs text-muted-foreground">
-                    {topPlace.count} transacciones
-                  </p>
+                  <p className="text-xs text-muted-foreground">{topPlace.count} transacciones</p>
                 </>
               ) : (
                 <>
-                  <h4 className="text-base font-semibold text-muted-foreground">
-                    Sin datos aún
-                  </h4>
-                  <p className="text-xs text-muted-foreground">
-                    Añade una transacción con descripción
-                  </p>
+                  <h4 className="text-base font-semibold text-muted-foreground">Sin datos aún</h4>
+                  <p className="text-xs text-muted-foreground">Añade una transacción con descripción</p>
                 </>
               )}
             </div>
@@ -266,7 +240,7 @@ const Dashboard = () => {
         <AddTransactionDialog
           open={open}
           onOpenChange={setOpen}
-          userId={user.id}
+          userId={user.uid}
           onCreated={load}
         />
       )}
