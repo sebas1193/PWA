@@ -1,4 +1,7 @@
 # Logs
+.vscode/
+
+
 logs
 *.log
 npm-debug.log*
@@ -19,6 +22,19 @@ dist-ssr
 # Graphify temp files and cache
 .graphify_python
 graphify-out/cache/
+
+# Reference folders — not part of the active project
+base/
+files/
+
+# Capacitor / Android local build artifacts
+caship/android/.gradle
+caship/android/app/build
+caship/android/build
+caship/android/local.properties
+
+# Claude memory and internal tooling
+.claude/
 
 # Editor directories and files
 .vscode/*
