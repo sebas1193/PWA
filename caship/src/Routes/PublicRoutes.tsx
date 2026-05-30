@@ -1,8 +1,8 @@
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { IonRouterOutlet } from '@ionic/react'
 import { useAuth } from '@/Hooks/useAuth'
-import Login from '@/pages/Auth/Login/Login'
-import Register from '@/pages/Auth/Register/Register'
+import Login from '@/pages/Auth/Login/Index'
+import Register from '@/pages/Auth/Register/Index'
 
 const PublicRoutes: React.FC = () => {
   const { user } = useAuth()
