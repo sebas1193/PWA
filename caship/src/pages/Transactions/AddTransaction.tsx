@@ -9,7 +9,7 @@ import {
   obtenerCategoriasUsuario,
   crearTransaccion,
 } from '@/services/firestore.service'
-import { analizarComprobante } from '@/services/gemini.service'
+import { analizarComprobante } from '@/services/vision.service'
 import type { Categoria, Naturaleza } from '@/types'
 
 const AddTransaction: React.FC = () => {

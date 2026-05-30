@@ -35,6 +35,10 @@ caship/android/local.properties
 
 # Claude memory and internal tooling
 .claude/
+.github/
+
+# Project planning artifacts
+commit-plan.json
 
 # Editor directories and files
 .vscode/*
