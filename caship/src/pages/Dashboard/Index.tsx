@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { IonPage, IonContent } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 import { LogOut, Tag, Plus, TrendingUp, TrendingDown, Wallet, MapPin, ChevronDown } from 'lucide-react'
@@ -6,13 +6,10 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import { useAuth } from '@/Hooks/useAuth'
 import { useNetwork } from '@/Hooks/useNetwork'
-import {
-  obtenerCuentasDeUsuario,
-  obtenerTransaccionesDeUsuario,
-} from '@/services/firestore.service'
-import { runSeed } from '@/Helpers/seed'
+import { useAppData } from '@/Context/AppDataContext'
+import { obtenerTransaccionesDeUsuario } from '@/services/firestore.service'
 import { formatMonto } from '@/Helpers/format'
-import type { Cuenta, Transaccion } from '@/types'
+import type { Transaccion } from '@/types'
 
 // Fix Leaflet marker icons en Vite (usa CDN para no romper el bundler)
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -123,13 +120,13 @@ const MapaCoordenadas: React.FC<{ puntos: Coordenada[] }> = ({ puntos }) => {
 
 // ── Dashboard ────────────────────────────────────────────────────
 const Dashboard: React.FC = () => {
-  const { user, signOut }       = useAuth()
-  const { isOnline }            = useNetwork()
-  const history                 = useHistory()
-  const [cuentas,  setCuentas]  = useState<Cuenta[]>([])
-  const [txns,     setTxns]     = useState<Transaccion[]>([])
-  const [loading,  setLoading]  = useState(true)
+  const { user, signOut }           = useAuth()
+  const { isOnline }                = useNetwork()
+  const { cuentas, loadingCuentas } = useAppData()
+  const history                     = useHistory()
+  const [txns,        setTxns]      = useState<Transaccion[]>([])
   const [mapaAbierto, setMapaAbierto] = useState(false)
+  const prevIdsRef = useRef<string>('')
 
   const saldoTotal    = cuentas.reduce((s, c) => s + c.saldo, 0)
   const egresoMasAlto = useMemo(
@@ -160,33 +157,23 @@ const Dashboard: React.FC = () => {
     [txns]
   )
 
+  // Only re-fetch transactions when the set of account IDs actually changes
   useEffect(() => {
-    if (!user) return
-    const cargar = async () => {
-      setLoading(true)
-      try {
-        await runSeed()
-        const cs = await obtenerCuentasDeUsuario(user.uid)
-        setCuentas(cs)
-        if (cs.length > 0) {
-          const todas = await obtenerTransaccionesDeUsuario(cs.map((c) => c.id))
-          setTxns(todas)
-        }
-      } catch (e) {
-        console.error(e)
-      } finally {
-        setLoading(false)
-      }
-    }
-    cargar()
-  }, [user])
+    if (cuentas.length === 0) { setTxns([]); return }
+    const ids = cuentas.map(c => c.id).sort().join(',')
+    if (ids === prevIdsRef.current) return
+    prevIdsRef.current = ids
+    obtenerTransaccionesDeUsuario(cuentas.map(c => c.id))
+      .then(setTxns)
+      .catch(console.error)
+  }, [cuentas])
 
   const handleSignOut = async () => {
     await signOut()
     history.replace('/login')
   }
 
-  if (loading) {
+  if (loadingCuentas) {
     return (
       <IonPage>
         <IonContent className="ion-no-padding" style={{ '--background': '#f5f7fb' } as any}>

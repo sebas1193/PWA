@@ -1,6 +1,6 @@
 import {
   doc, setDoc, updateDoc, deleteDoc, getDoc, getDocs,
-  collection, query, where, Timestamp, writeBatch, deleteField,
+  collection, query, where, Timestamp, writeBatch, deleteField, onSnapshot,
 } from 'firebase/firestore'
 import { db } from '@/integrations/firebase'
 import { COLLECTIONS, USER_CATEGORIAS } from '@/constants/collections'
@@ -174,6 +174,20 @@ export const crearTransaccion = async (data: {
   return id
 }
 
+// Real-time listener — fires immediately from IndexedDB cache, then from server
+export const suscribirTransaccionesDeCuenta = (
+  id_cuenta: string,
+  callback: (txns: Transaccion[]) => void
+): (() => void) => {
+  const q = query(
+    collection(db, COLLECTIONS.TRANSACCIONES),
+    where('id_cuenta', '==', id_cuenta)
+  )
+  return onSnapshot(q, snap =>
+    callback(snap.docs.map(d => d.data() as Transaccion))
+  )
+}
+
 export const obtenerTransaccionesDeCuenta = async (id_cuenta: string): Promise<Transaccion[]> => {
   const q    = query(
     collection(db, COLLECTIONS.TRANSACCIONES),
@@ -189,18 +203,22 @@ export const obtenerTransaccion = async (id: string): Promise<Transaccion | null
 }
 
 export const eliminarTransaccion = async (
-  id:         string,
-  id_cuenta:  string,
-  naturaleza: Naturaleza,
-  monto:      number
+  id:           string,
+  id_cuenta:    string,
+  naturaleza:   Naturaleza,
+  monto:        number,
+  saldoCached?: number  // pass from context to skip getDoc round-trip
 ): Promise<void> => {
-  const cuentaRef  = doc(db, COLLECTIONS.CUENTAS, id_cuenta)
-  const cuentaSnap = await getDoc(cuentaRef)
-  if (!cuentaSnap.exists()) throw new Error('Cuenta no encontrada')
+  const cuentaRef = doc(db, COLLECTIONS.CUENTAS, id_cuenta)
 
-  const saldoActual = (cuentaSnap.data() as Cuenta).saldo
-  const delta = naturaleza === 'ingreso' ? -monto : monto  // reversa del efecto original
+  let saldoActual = saldoCached
+  if (saldoActual === undefined) {
+    const snap = await getDoc(cuentaRef)
+    if (!snap.exists()) throw new Error('Cuenta no encontrada')
+    saldoActual = (snap.data() as Cuenta).saldo
+  }
 
+  const delta = naturaleza === 'ingreso' ? -monto : monto
   const batch = writeBatch(db)
   batch.delete(doc(db, COLLECTIONS.TRANSACCIONES, id))
   batch.update(cuentaRef, { saldo: saldoActual + delta, updated_at: Timestamp.now() })

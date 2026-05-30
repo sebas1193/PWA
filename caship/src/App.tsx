@@ -1,6 +1,7 @@
 import { IonApp, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AuthProvider } from '@/Hooks/useAuth';
+import { AppDataProvider } from '@/Context/AppDataContext';
 import AppRoutes from '@/Routes/AppRoutes';
 
 /* Leaflet map styles */
@@ -33,11 +34,13 @@ setupIonicReact();
 
 const App: React.FC = () => (
   <AuthProvider>
-    <IonApp>
-      <IonReactRouter>
-        <AppRoutes />
-      </IonReactRouter>
-    </IonApp>
+    <AppDataProvider>
+      <IonApp>
+        <IonReactRouter>
+          <AppRoutes />
+        </IonReactRouter>
+      </IonApp>
+    </AppDataProvider>
   </AuthProvider>
 );
 

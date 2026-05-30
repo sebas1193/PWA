@@ -2,43 +2,32 @@ import { useEffect, useState } from 'react'
 import { IonPage, IonContent } from '@ionic/react'
 import { useParams, useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus, Pencil, Trash2, Check, X, TrendingUp, TrendingDown } from 'lucide-react'
-import { useAuth } from '@/Hooks/useAuth'
+import { useAppData } from '@/Context/AppDataContext'
 import {
-  obtenerTransaccionesDeCuenta,
-  obtenerCategoriasGlobales,
-  obtenerCategoriasUsuario,
+  suscribirTransaccionesDeCuenta,
   eliminarTransaccion,
 } from '@/services/firestore.service'
 import { formatMonto } from '@/Helpers/format'
-import type { Transaccion, Categoria } from '@/types'
+import type { Transaccion } from '@/types'
 
 const Transactions: React.FC = () => {
-  const { cuentaId }                        = useParams<{ cuentaId: string }>()
-  const { user }                            = useAuth()
-  const history                             = useHistory()
-  const [transacciones, setTransacciones]   = useState<Transaccion[]>([])
-  const [categorias,    setCategorias]      = useState<Record<string, string>>({})
-  const [eliminarId,    setEliminarId]      = useState<string | null>(null)
+  const { cuentaId }                      = useParams<{ cuentaId: string }>()
+  const { cuentas, categoriasMap }        = useAppData()
+  const history                           = useHistory()
+  const [transacciones, setTransacciones] = useState<Transaccion[]>([])
+  const [eliminarId,    setEliminarId]    = useState<string | null>(null)
 
+  // onSnapshot: fires instantly from IndexedDB cache + stays in sync after add/edit
   useEffect(() => {
-    obtenerTransaccionesDeCuenta(cuentaId).then(setTransacciones)
+    return suscribirTransaccionesDeCuenta(cuentaId, setTransacciones)
   }, [cuentaId])
 
-  useEffect(() => {
-    const cargar = async () => {
-      const globales = await obtenerCategoriasGlobales()
-      const propias: Categoria[] = user ? await obtenerCategoriasUsuario(user.uid) : []
-      const mapa: Record<string, string> = {}
-      ;[...globales, ...propias].forEach((c) => { mapa[c.id] = c.nombre })
-      setCategorias(mapa)
-    }
-    cargar()
-  }, [user])
-
-  const handleEliminar = async (t: Transaccion) => {
-    await eliminarTransaccion(t.id, t.id_cuenta, t.naturaleza, t.monto)
-    setTransacciones((prev) => prev.filter((x) => x.id !== t.id))
+  // Fire-and-forget delete: onSnapshot reflects the removal automatically
+  const handleEliminar = (t: Transaccion) => {
     setEliminarId(null)
+    const cuenta = cuentas.find(c => c.id === t.id_cuenta)
+    eliminarTransaccion(t.id, t.id_cuenta, t.naturaleza, t.monto, cuenta?.saldo)
+      .catch(console.error)
   }
 
   const sorted = [...transacciones].sort((a, b) => {
@@ -109,9 +98,9 @@ const Transactions: React.FC = () => {
                             {t.descripcion || <span className="text-muted-foreground italic">Sin descripción</span>}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                            {categorias[t.id_categoria] && (
+                            {categoriasMap[t.id_categoria] && (
                               <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${esIngreso ? 'bg-emerald-500/10 text-emerald-600' : 'bg-rose-500/10 text-rose-600'}`}>
-                                {categorias[t.id_categoria]}
+                                {categoriasMap[t.id_categoria]}
                               </span>
                             )}
                             <span className="text-[10px] text-muted-foreground">
