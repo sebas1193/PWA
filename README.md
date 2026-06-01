@@ -14,6 +14,38 @@ El prototipo visual fue construido con **Lovable** y sirvió como referencia de 
 
 ---
 
+## Capturas de pantalla
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="caship/src/docs/INICIAR_SESION.jpeg" width="200" alt="Iniciar sesión" /><br/>
+      <sub><b>Iniciar Sesión</b></sub>
+    </td>
+    <td align="center">
+      <img src="caship/src/docs/DASHBOARD.jpeg" width="200" alt="Dashboard" /><br/>
+      <sub><b>Dashboard</b></sub>
+    </td>
+    <td align="center">
+      <img src="caship/src/docs/CREAR_CUENTA.jpeg" width="200" alt="Crear cuenta" /><br/>
+      <sub><b>Crear Cuenta</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="caship/src/docs/LISTADO_TRANSACCIONES.jpeg" width="200" alt="Listado de transacciones" /><br/>
+      <sub><b>Listado de Transacciones</b></sub>
+    </td>
+    <td align="center">
+      <img src="caship/src/docs/ANADIR_TRANSACCION.jpeg" width="200" alt="Añadir transacción" /><br/>
+      <sub><b>Añadir Transacción</b></sub>
+    </td>
+    <td></td>
+  </tr>
+</table>
+
+---
+
 ## APIs de backend consumidas
 
 | API | Propósito |
